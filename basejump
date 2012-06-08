@@ -10,12 +10,14 @@ def convert(options):
         encode = b64encode(file.read())
     if options.o == 'img':
         print '<img alt="" src="data:{0};base64,{1}"/>'.format(mime_type[0], encode)
+    elif options.o == 'naked':
+        print "data:{0};base64,{1}".format(mime_type[0], encode)
     else:
         print "background-image: url(data:{0};base64,{1});".format(mime_type[0], encode)
 
 if __name__ == "__main__":
     parser = ArgumentParser(prog='basejump', description='Convert images to base64 strings for HTML/CSS embedding')
-    parser.add_argument('-o', default='css', help='output type [img|css] (default: %(default)s)')
+    parser.add_argument('-o', default='naked', help='output type [img|css|naked] (default: %(default)s)')
     parser.add_argument('file', type=str, help='path to image file to be converted')
     parser.add_argument('--version', action='version', version='%(prog)s 0.0.1')
     options = parser.parse_args()
